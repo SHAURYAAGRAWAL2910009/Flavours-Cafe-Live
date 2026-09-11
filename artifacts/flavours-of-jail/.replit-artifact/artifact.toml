@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Flavours Of Jail Café"
+description = "A bold, jail-themed café website for Flavours Of Jail in Indore, featuring its menu highlights, reviews, event bookings, and reservation actions."
+version = "1.0.0"
+id = "artifacts/flavours-of-jail"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22040
+
+[services.development]
+run = "pnpm --filter @workspace/flavours-of-jail run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/flavours-of-jail", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/flavours-of-jail/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22040"
+BASE_PATH = "/"
